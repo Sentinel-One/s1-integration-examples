@@ -1,0 +1,13 @@
+services:
+  devcontainer:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ..:/workspaces/s1-integration-examples
+    networks:
+      - devcontainer
+    command: sleep infinity
+
+networks:
+  devcontainer:

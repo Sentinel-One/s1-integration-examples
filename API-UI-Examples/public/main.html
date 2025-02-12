@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SentinelOne APIs</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="jquery.json-viewer.css">
+  <script src="jquery.min.js"></script>
+  <script src="jquery.json-viewer.js"></script>
+</head>
+
+</head>
+<body>
+  <header>
+    <h1>SentinelOne APIs</h1>
+  </header>
+
+  <div id="login-section" style="display: block">
+    <h2>Login</h2>
+    <form id="login-form">
+      <label for="apiURL">API URL:</label>
+      <input type="text" id="apiURL" name="apiURL" placeholder="Your SentinelOne base URL" required value="a"><br><br>
+
+      <label for="apiToken">API Token:</label>
+      <input type="password" id="apiToken" name="apiToken" placeholder="Your API Token" required><br><br>
+      <button type="submit">Login</button>
+    </form>
+  </div>
+
+  <div id="api-section" style="display: block;">
+    <div class="container">
+      <div class="api-list">
+        <h2>API Calls</h2>
+        <button class="api-button" data-endpoint="/rbac/roles">Roles</button>
+        <button class="api-button" data-endpoint="/accounts">Accounts</button>
+        <button class="api-button" data-endpoint="/sites">Sites</button>
+        <button class="api-button" data-endpoint="/groups">Groups</button>
+        <button class="api-button" data-endpoint="/users">Users</button>
+        <button class="api-button" data-endpoint="/agents/count">Total Agents</button>
+        <button class="api-button" data-endpoint="/agents">Agent Details</button>
+        <button class="api-button" data-endpoint="/update/agent/packages">Agent Packages</button> 
+        <button class="api-button" data-endpoint="/cloud-detection/alerts">Alerts</button>
+        <button class="api-button" data-endpoint="/threats">Threats</button>
+        <button class="api-button" data-endpoint="/restrictions">Block List</button>
+        <button class="api-button" data-endpoint="/unified-exclusions">Exclusions</button>
+<br/>
+        <form id="logout-form" hrer="/logout">
+            <button type="submit">Logout</button>
+          </form>
+      </div>
+      <div class="api-response">
+        <div id="apiName" value=""></div>
+        <pre id="response-output"></pre>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+
+</body>
+</html>
