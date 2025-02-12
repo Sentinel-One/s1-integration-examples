@@ -1,24 +1,10 @@
-# s1-sdk-examples
-
-## Description
-
-How many cool things can we show off with SentinelOne SDKs like Nexus SDK. 
-
-## ⁉️ Problem Statement
-
-We need to create some cool demos for SDKs without duplicating efforts.
-
-## 🔑 Features / Demos
-
-* Nexus Wrapped
-    * Nexus SDK wrapped with License File for “metering” (internal)
-    * API-based version of Nexus SDK (internal/external)
-* Scan-a-file
-    * File Upload / Download scanning demo (external)
-    * Reputation service (external)
-* The Wannabe
-    * A basic agent that checks into a console, very basic and shows a security product can be built around Nexus (external)
+# s1-integration-examples
 
 ## SDK Examples
 
+This section shows differnt ways to use the Sentinelone Nexus SDK using different languages. The quickstart folder contains a subfolder for several languages where you will find sample code to invoke the Nexus SDK.
+
+Each Quickstart will produce a malware scanner utilizing the SentinelOne Static AI engine via the Nexus SDK to scan files and/or directories on demand.  Each scanner is embedded within a Docker container and can be utilized on any platform that supports Docker.
+
 - [Quickstart Examples](./quickstart/README.md)
+
