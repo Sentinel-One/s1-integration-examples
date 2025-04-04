@@ -8,3 +8,6 @@ Each Quickstart will produce a malware scanner utilizing the SentinelOne Static 
 
 - [Quickstart Examples](./quickstart/README.md)
 
+While each version's output may differ slightly, the SDK will return a scan result (benign, suspicious, or malware) and the indicators as follows:<br/>
+
+ ![SDK Output example](SDK-Output-example.png)<br/>
