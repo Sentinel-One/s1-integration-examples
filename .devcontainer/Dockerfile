@@ -1,6 +1,7 @@
 FROM mcr.microsoft.com/devcontainers/base:bookworm
 
-ARG GO_VERSION=1.23.4
+ARG GO_VERSION=1.23.9
+ARG NVM_VERSION=0.40.3
 
 COPY files /
 
@@ -27,7 +28,7 @@ RUN set -xe \
 # install NodeJS tools
 RUN set -xe \
     && cd /tmp \
-    && wget https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.0/install.sh \
+    && wget https://raw.githubusercontent.com/nvm-sh/nvm/v${NVM_VERSION}/install.sh \
     && chmod +x install.sh \
     && mkdir /home/vscode/.nvm \
     && chown -hR vscode /home/vscode \
