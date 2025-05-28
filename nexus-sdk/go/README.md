@@ -35,13 +35,13 @@ Making sure your current working directory is the **_root folder of the reposito
 **Intel/AMD-based systems**
 
 ```sh
-alias s1scanner="docker run --rm -v $(pwd)/nexus-sdk/_distfiles_/SDK/lib/linux/x64/libdfi.so:/lib/libnexus.unstripped.so:ro -v /:/mnt:ro --platform linux/amd64 ghcr.io/sentinel-one/s1-integration-examples/nexus-sdk/go/s1scanner"
+alias s1scanner="docker run --rm -v $(pwd)/nexus-sdk/_distfiles_/SDK/lib/linux/x64/libdfi.so:/lib/libnexus.unstripped.so:ro -v /:/mnt:ro --platform linux/amd64 ghcr.io/s1integrations/nexus-sdk/go/s1scanner"
 ```
 
 **ARM-based systems (eg: Apple Silicon)**
 
 ```sh
-alias s1scanner="docker run --rm -v $(pwd)/nexus-sdk/_distfiles_/SDK/lib/linux/arm64/libdfi.so:/lib/libnexus.unstripped.so:ro -v /:/mnt:ro --platform linux/arm64 ghcr.io/sentinel-one/s1-integration-examples/nexus-sdk/go/s1scanner"
+alias s1scanner="docker run --rm -v $(pwd)/nexus-sdk/_distfiles_/SDK/lib/linux/arm64/libdfi.so:/lib/libnexus.unstripped.so:ro -v /:/mnt:ro --platform linux/arm64 ghcr.io/s1integrations/nexus-sdk/go/s1scanner"
 ```
 
 ### Sample Scanner Commands
