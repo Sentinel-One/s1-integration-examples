@@ -13,7 +13,8 @@ RUN set -xe \
 
 # install Python tools
 RUN set -xe \
-    && apt install -y python3 python3-pip
+    && su - vscode -c "curl -LsSf https://astral.sh/uv/install.sh | sh" \
+    && su - vscode -c "uv python install 3.12"
 
 # install Go tools
 RUN set -xe \ 

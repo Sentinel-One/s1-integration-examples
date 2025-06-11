@@ -17,8 +17,6 @@ This document outlines the process of building the container locally on your own
 
 ## Building the Container
 
-Because the underlying container utilizes the Linux shared object library version of the Nexus SDK, you will need to build a platform-specific container for your OS unless it is capable of running other architectures (eg: Apple Silicon CPU running Rosetta).
-
 To build the container, run the following command:
 
 ```sh
@@ -32,7 +30,7 @@ You are now ready to run your local version of the container with the Nexus SDK 
 Create an alias for the Docker command to simplify typing:
 
 ```sh
-alias s1scanner="docker run --rm -v /:/mnt:ro go/s1scanner"
+alias s1scanner="docker run --rm -v /:/mnt:ro python/s1scanner"
 ```
 
 **NOTE:**
@@ -46,19 +44,13 @@ _Do not try to run the commands below within a VS Code Terminal if you are using
   s1scanner -h
   ```
 
-- To show the version of the Nexus SDK use the `-v` or `--version` option:
-  
-  ```sh
-  s1scanner -v
-  ```
-
 - To run a simple demo without scanning local files use the `--demo` option:
   
   ```sh
   s1scanner --demo
   ```
   
-- To scan a single file or directory: 
+- To scan a file or directory: 
 
   ```sh
   s1scanner FULL_PATH_TO_FILE_OR_DIR
@@ -82,18 +74,6 @@ _Do not try to run the commands below within a VS Code Terminal if you are using
   s1scanner /home/josh/s1-integration-examples/nexus-sdk/sample-files/NexusSDK.pdf
   ```
 
-- You can also scan using wildcards (ie: file globs) and even use local environment variables or command interpolation:
-
-  ```sh
-  s1scanner -r FULL_PATH_TO_FILE_OR_DIR_WITH_WILDCARD
-  ```
-
-  _Example:_
-
-  ```sh
-  s1scanner $(pwd)/../sample-files/*.txt
-  ```
-
 - To scan a directory recursively, use the `-r` or `--recurse` option:
 
   ```sh
@@ -106,29 +86,8 @@ _Do not try to run the commands below within a VS Code Terminal if you are using
   s1scanner -r $(pwd)/../sample-files
   ```
 
-- To output the messages in JSON and use `jq` to prettify the results (note that [`jq`](https://jqlang.github.io/jq/download/) must be installed on your system for this to work):
-  
-  ```sh
-  s1scanner --json -r FULL_PATH_TO_DIR | jq .
-  ```
-
-  _Example:_
-
-  ```sh
-  s1scanner --json -r $(pwd)/../sample-files | jq .
-  ```
-  
-- Some additional command-line options that may be of interest:
-  
-  | Option                | Description                                                        |
-  | --------------------- | ------------------------------------------------------------------ |
-  | `--max-depth`         | maximum depth to of an archive file (eg: `.zip` or `.tar`) to scan |
-  | `--max-scan-duration` | maximum amount of time to allow the scanner to scan a file         |
-
-  Use the `-h` option for a full list of options and help.
-
 ## Additional References
 
-- [Developing Your Own Application using Go](./docs/app-developer.md)
-- [Developer Guide for Go Example](./docs/developer.md) (for making changes to this example itself)
+- [Developing Your Own Application using Python](./docs/app-developer.md)
+- [Developer Guide for Python Example](./docs/developer.md) (for making changes to this example itself)
 - [Back to Nexus SDK Examples](../README.md)

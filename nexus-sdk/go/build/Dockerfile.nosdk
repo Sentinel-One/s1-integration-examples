@@ -1,4 +1,4 @@
-FROM --platform=$BUILDPLATFORM golang:1.24-bookworm AS build_stage
+FROM --platform=${BUILDPLATFORM} golang:1.24-bookworm AS build_stage
 
 WORKDIR /go/src
 
@@ -13,7 +13,7 @@ RUN set -e && \
     ls -l && \
     go build -o s1scanner ./cmd/s1scanner
 
-FROM busybox:glibc
+FROM --platform=${BUILDPLATFORM} busybox:glibc
 
 WORKDIR /
 

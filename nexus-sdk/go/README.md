@@ -28,8 +28,6 @@ The "SDK-less" container does **not** contain the Nexus SDK library within it, s
 
 You will need to mount the appropriate version of the shared library into your container depending on the architecture of your machine.  If you are running on an Intel/AMD-based system, then you'll need to mount the `SDK/lib/linux/x64/libdfi.so` library from the Nexus SDK distribution package.  ARM-based systems such as MacOS systems running on Apple Silicon must mount the `SDK/lib/linux/arm64/libdfi.so` library from the Nexus SDK distribution package.
 
-_**NOTE:** Even though the commands below refer to Linux, it is safe to run them on MacOS and Windows as the container itself is running Linux, so we use the Linux version of the shared library._
-
 Making sure your current working directory is the **_root folder of the repository_**, create an alias for the Docker command to simplify typing:
 
 **Intel/AMD-based systems**

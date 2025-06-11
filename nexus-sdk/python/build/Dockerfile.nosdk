@@ -1,0 +1,12 @@
+FROM --platform=${BUILDPLATFORM} python:3.12-slim
+
+WORKDIR /opt/s1scanner
+
+COPY ./python/docker-entrypoint.sh /
+COPY ./python/scanner.py /opt/s1scanner/bin/
+COPY ./sample-files /opt/s1scanner/sample-files/
+
+RUN set -e && \
+    chmod +x /docker-entrypoint.sh /opt/s1scanner/bin/scanner.py
+
+ENTRYPOINT ["/docker-entrypoint.sh"]

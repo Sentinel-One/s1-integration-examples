@@ -1,109 +1,103 @@
-# SDK Quickstart for Python <!-- omit in toc -->
+# Simple File Scanner in Python <!-- omit in toc -->
 
-Use this directory to see how quickly and easily it is to get started with the SentinelOne Nexus SDK in Python.  You'll build a Docker container and run it.   
-
-By default, it will default to "Demo mode" where the container will scan the included [sample-files](../sample-files/) for malware and return a verdict for each file.
+This folder contains a sample file scanner written in Python that utilizes the SentinelOne Nexus SDK Python library.  
 
 ## Table of Contents <!-- omit in toc -->
 
 - [Prerequisite Steps](#prerequisite-steps)
-- [Build the Container](#build-the-container)
-- [Run the Container](#run-the-container)
+- [Embedded SDK Container vs SDK-less Container](#embedded-sdk-container-vs-sdk-less-container)
+- [Running the SDK-less Container](#running-the-sdk-less-container)
+  - [Sample Scanner Commands](#sample-scanner-commands)
+- [Developing Your Own Application](#developing-your-own-application)
+- [Additional References](#additional-references)
 
 ## Prerequisite Steps
 
 - Ensure you have met all of the [System Requirements](../README.md#system-requirements)
 - Ensure you have completed the [Initial Setup Steps](../README.md#initial-setup-steps)
 
-## Build the Container
-The resulting container is "SDK-less" meaning it does **not** contain the Nexus SDK library within it.  The user will need to mount the Nexus SDK library when running it.  
-* Build the Docker container
-  ```
-  docker build -f ./quickstart/python/Dockerfile -t s1scanner-python .
-  ```
+## Embedded SDK Container vs SDK-less Container
 
-## Run the Container
-As mentioned above, the container does **not** contain the Nexus SDK library within it, so you will need to mount the shared library file as a read-only volume when running it.  The examples below all include the `-v $(pwd)/nexus-sdk:/nexus-sdk ` switch to include the SDK at run time.
+There are two ways utilize the SDK for this example application - the fastest way is to use the pre-built "SDK-less" container and simply mount the Python library from the SDK distribution files as a read-only volume within the container.  If you wish to use this method, continue reading below.
 
-Additionally, you can specify flags/settings to either specify a file or directory to scan or mount your local filesystem to scan. For example:
-| Flag                           | Function                                            |
-| ------------------------------ | --------------------------------------------------- |
-| -e FILES=<YOUR_FILE>           | specify a file or directory to scan                 |
-| -e RECURSE="true"              | recurse directory and subdirectories                |
-| -v $(pwd)/nexus-sdk:/nexus-sdk | mount your copy of the Nexus SDK                    |
-| -v ./:/mnt:ro                  | mount your local directory to /mnt in the container |
+The other choice is to clone this repository and build the container locally on your own machine.  If you choose this method, please read the [Building and Running a Local Container](./docs/local-container.md) documentation.
 
-Here are some example command lines with their usage:
-* Demo mode
-  ```
-  docker run -it --rm  -v $(pwd)/nexus-sdk:/nexus-sdk s1scanner-python
-  ```
-* Specify a single file to scan
-  ```
-  docker run -it --rm  -v $(pwd)/nexus-sdk:/nexus-sdk -e FILES="NexusSDK.pdf" s1scanner-python
-  ```
-* Specify a directory to scan
-  ```
-  docker run -it --rm  -v $(pwd)/nexus-sdk:/nexus-sdk -e FILES="/app" s1scanner-python
-  ```
-* Specify a directory to scan recursively
-  ```
-  docker run -it --rm  -v $(pwd)/nexus-sdk:/nexus-sdk -e FILES="/app" -e RECURSE="true" s1scanner-python
-  ```
-* Specify a file from the HOST system's current directory to scan
-  ```
-  docker run --it --rm  -v $(pwd)/nexus-sdk:/nexus-sdk -v ./:/mnt:ro -e FILES="/mnt/quickstart/sample-files" s1scanner-python
-  ```
+## Running the SDK-less Container
 
-### Sample Output
-Here's what to expect when you run in Demo mode:
-```
-docker run -it --rm  -v $(pwd)/nexus-sdk:/nexus-sdk s1scanner-python
+The "SDK-less" container does **not** contain the Nexus SDK library within it, so you will need to mount the shared library file as a read-only volume when running it.
 
-==========================================================
-   Scanning the NexusSDK.pdf file using python command
-==========================================================
-Scanning /app/NexusSDK.pdf
-Using SentinelDFI version b'24.1.1.2' (b'7ef1df615d30b87b0b41a26c72b643d54e229bce-Release.arm64')
-File hash: b'fda06704bec27d852fc3401e899fcbdd472377a0'
-Verdict: benign
-Indicators: ``
-started at 2025-01-06 18:22:12.867615383
-  ended at 2025-01-06 18:22:13.125601509
--------------------------------------------------
+Making sure your current working directory is the **_root folder of the repository_**, create an alias for the Docker command to simplify typing:
 
+**Intel/AMD-based systems**
 
-==========================================================
-   Now using the python wheel wrapper with multiple files
-     [python -m SentinelDFI.scanner -i PATH_TO_FILE]
-==========================================================
-
-Scanning file:  /app/NexusSDK.pdf
-Using SentinelDFI version b'24.1.1.2' (b'7ef1df615d30b87b0b41a26c72b643d54e229bce-Release.arm64')
-File hash: b'fda06704bec27d852fc3401e899fcbdd472377a0'
-Verdict: benign
-Indicators: ``
-started at 2025-01-06 18:22:13.126191925
-  ended at 2025-01-06 18:22:13.236438717
--------------------------------------------------
-
-Scanning file:  /app/TestFileSuspicious.txt
-Using SentinelDFI version b'24.1.1.2' (b'7ef1df615d30b87b0b41a26c72b643d54e229bce-Release.arm64')
-File hash: b'7a493e44c7d736a2e4d87bdf04db2ec4aba872d3'
-Verdict: suspicious
-Indicators: `EICAR-SENTINEL-ANTIVIRUS-SUSP-FILE`
-started at 2025-01-06 18:22:13.237138800
-  ended at 2025-01-06 18:22:13.284439592
--------------------------------------------------
-
-Scanning file:  /app/TestFileMalicious.txt
-Using SentinelDFI version b'24.1.1.2' (b'7ef1df615d30b87b0b41a26c72b643d54e229bce-Release.arm64')
-File hash: b'88355b46c777ca86e7045788805c37ebfcc65de2'
-Verdict: malware
-Indicators: `EICAR-SENTINEL-ANTIVIRUS-TEST-FILE`
-started at 2025-01-06 18:22:13.285275175
-  ended at 2025-01-06 18:22:13.332424550
--------------------------------------------------
+```sh
+alias s1scanner="docker run --rm -v $(pwd)/nexus-sdk/_distfiles_/SDK:/opt/s1scanner/nexus-sdk/SDK:ro -v /:/mnt:ro --platform linux/amd64 ghcr.io/s1integrations/nexus-sdk/python/s1scanner"
 ```
 
-More detailed instructions and usage examples can be found on the [SentinelOne Community Site](https://community.sentinelone.com/s/article/000005296).
+**ARM-based systems (eg: Apple Silicon)**
+
+```sh
+alias s1scanner="docker run --rm -v $(pwd)/nexus-sdk/_distfiles_/SDK:/opt/s1scanner/nexus-sdk/SDK:ro -v /:/mnt:ro --platform linux/arm64 ghcr.io/s1integrations/nexus-sdk/python/s1scanner"
+```
+
+### Sample Scanner Commands
+
+- To print a simple help screen use the `-h` or `--help` option:
+  
+  ```sh
+  s1scanner -h
+  ```
+
+- To run a simple demo without scanning local files use the `--demo` option:
+  
+  ```sh
+  s1scanner --demo
+  ```
+  
+- To scan a file or directory: 
+
+  ```sh
+  s1scanner FULL_PATH_TO_FILE_OR_DIR
+  ```
+
+  where `FULL_PATH_TO_FILE_OR_DIR` is the **absolute path** to the file or directory to scan
+
+  _**NOTE:**_
+  
+  _Relative file or directory paths will not work as the container has no context as to what your current working directory is._
+  
+  _Also be aware that running this within the Dev Containers environment will not work since it is already running inside a container.  Be sure to run the command from an OS terminal window instead of through the Terminal window in VS Code._
+ 
+  
+  _Examples:_
+
+  ```sh
+  s1scanner /Users/joshhogle/s1-integration-examples/nexus-sdk/sample-files/NexusSDK.pdf
+
+  s1scanner "/mnt/c/Users/Josh Hogle/s1-integration-examples/nexus-sdk/sample-files/NexusSDK.pdf"
+ 
+  s1scanner /home/josh/s1-integration-examples/nexus-sdk/sample-files/NexusSDK.pdf
+  ```
+
+- To scan a directory recursively, use the `-r` or `--recurse` option:
+
+  ```sh
+  s1scanner -r FULL_PATH_TO_DIR
+  ```
+
+  _Example:_
+
+  ```sh
+  s1scanner -r $(pwd)/../sample-files
+  ```
+
+## Developing Your Own Application
+
+For information on using the code within the example to develop your own Go application, please [click here](./docs/app-developer.md).
+
+## Additional References
+
+- [Developing Your Own Application using Python](./docs/app-developer.md)
+- [Building and Running a Local Container](./docs/local-container.md)
+- [Developer Guide for Python Example](./docs/developer.md) (for making changes to this example itself)
+- [Back to Nexus SDK Examples](../README.md)

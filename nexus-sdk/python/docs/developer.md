@@ -1,6 +1,6 @@
 # Developer Guide for Go Example <!-- omit in toc -->
 
-This document is intended for anyone who may be actually adding features to or working on the Golang SDK example itself.  It is _not_ targeted at developing your own Go application using the Nexus SDK. [Click here](./app-developer.md) to view that documentation instead.
+This document is intended for anyone who may be actually adding features to or working on the Python SDK example itself.  It is _not_ targeted at developing your own Python application using the Nexus SDK. [Click here](./app-developer.md) to view that documentation instead.
 
 ## Table of Contents <!-- omit in toc -->
 
@@ -8,7 +8,6 @@ This document is intended for anyone who may be actually adding features to or w
 - [Additional System Requirements](#additional-system-requirements)
 - [Visual Studio Code DevContainers](#visual-studio-code-devcontainers)
 - [Building the Application](#building-the-application)
-- [Built-in Code Documentation](#built-in-code-documentation)
 - [Building the SDK-less Containers for GHCR](#building-the-sdk-less-containers-for-ghcr)
 - [Additional References](#additional-references)
 
@@ -36,7 +35,7 @@ basically allows you to run your development environment inside of Visual Studio
 
 When you open the repository from within VS Code and have the extension installed, you can either choose to manually open the repository in a container or VS Code should automatically prompt you to do so.
 
-On Windows and Linux this is not necessarily required, but it is recommended in order to have a consistent development environment across platforms.  MacOS does require this if you want to be able to directly compile and run the Go binary as it will be dynamically linked with the Linux version of the Nexus SDK.
+For Python development, this is not necessarily required, but it is recommended in order to have a consistent development environment across platforms and languages.
 
 For much more information on **DevContainers**, please refer to the [Visual Studio Code website](https://code.visualstudio.com/docs/devcontainers/containers).
 
@@ -44,35 +43,15 @@ The remainder of this document assumes you are using **DevContainers** for devel
 
 ## Building the Application
 
-To compile the application for local testing, simply open a new Terminal within VS Code and run the following command from the `nexus-sdk/go` folder within the repository:
+To run the application for local testing, simply open a new Terminal within VS Code and run the following command from the `nexus-sdk/python` folder within the repository:
 
 ```sh
-make s1scanner
-```
-
-You can now run the scanner using the command:
-
-```sh
-LD_LIBRARY_PATH=./dist ./dist/s1scanner --base-path-folder=/ [flags] <file_or_dir ...>
+uv run scanner.py --base-path-folder=/ [flags] <file_or_dir ...>
 ```
 
 replacing `[flags]` with any actual arguments to `s1scanner` and `<file_or_dir>` with the absolute path to any file(s) or directory(ies) you wish to scan.  
 
 Be sure to use **absolute** paths, otherwise you will get unexpected behavior when running it outside of a container.
-
-## Built-in Code Documentation
-
-All of the code within the Go Quickstart is fully documented according to Go's documentation standards. 
-
-To view the Go documentation for the project, simply run the following command within a Terminal inside VS Code:
-
-```sh
-make doc-server
-```
-
-You should be prompted to open a browser, but if not, you can open a one and navigate to `http://localhost:9000` to view the documentation.
-
-_**NOTE:** If your machine already has something running on port 9000, choose a different port number by adding `DOCSERVER_PORT=new_port_number` to the command._
 
 ## Building the SDK-less Containers for GHCR
 
@@ -99,6 +78,6 @@ In order to build and push the SDK-less version of the container images to GitHu
 
 ## Additional References
 
-- [Back to Simple File Scanner in Go](../README.md)
+- [Back to Simple File Scanner in Python](../README.md)
 - [Back to Nexus SDK Examples](../../README.md)
-  
+  s

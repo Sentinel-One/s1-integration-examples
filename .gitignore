@@ -1,4 +1,5 @@
 # general files to ignore
 .codegpt
 .DS_Store
+.venv
 dist
