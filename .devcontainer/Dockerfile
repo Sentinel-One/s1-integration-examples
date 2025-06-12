@@ -1,6 +1,7 @@
 FROM mcr.microsoft.com/devcontainers/base:bookworm
 
-ARG GO_VERSION=1.23.4
+ARG GO_VERSION=1.23.9
+ARG NVM_VERSION=0.40.3
 
 COPY files /
 
@@ -12,7 +13,8 @@ RUN set -xe \
 
 # install Python tools
 RUN set -xe \
-    && apt install -y python3 python3-pip
+    && su - vscode -c "curl -LsSf https://astral.sh/uv/install.sh | sh" \
+    && su - vscode -c "uv python install 3.12"
 
 # install Go tools
 RUN set -xe \ 
@@ -27,7 +29,7 @@ RUN set -xe \
 # install NodeJS tools
 RUN set -xe \
     && cd /tmp \
-    && wget https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.0/install.sh \
+    && wget https://raw.githubusercontent.com/nvm-sh/nvm/v${NVM_VERSION}/install.sh \
     && chmod +x install.sh \
     && mkdir /home/vscode/.nvm \
     && chown -hR vscode /home/vscode \

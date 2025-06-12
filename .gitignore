@@ -1,10 +1,5 @@
 # general files to ignore
 .codegpt
 .DS_Store
+.venv
 dist
-
-# Nexus SDK files
-nexus-sdk
-libdfi*.*
-pyscanner.py
-SentinelDFI*.whl
